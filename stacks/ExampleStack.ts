@@ -1,12 +1,11 @@
 import { Api, EventBus, StackContext, Queue } from "sst/constructs";
-
 export function ExampleStack({ stack }: StackContext) {
 
   const warehouseQueue = new Queue(stack, 'QueueWarehouse', {
     consumer: {
       function: {
         handler:
-        "packages/functions/src/warehouse.handler",
+          "packages/functions/src/warehouse.handler",
       },
       cdk: {
         eventSource: {
@@ -17,13 +16,30 @@ export function ExampleStack({ stack }: StackContext) {
   });
 
 
+  const receiptQueueDLQ = new Queue(stack, 'QueueReceiptDLQ', {
+    consumer: {
+      function: {
+        handler:
+          "packages/functions/src/receipt-dlq.handler",
+
+      }
+    },
+  })
+
   const receiptQueue = new Queue(stack, 'QueueReceipt', {
     consumer: {
       function: {
         handler:
-        "packages/functions/src/receipt.handler",
-      
+          "packages/functions/src/receipt.handler",
       },
+    },
+    cdk: {
+      queue: {
+        deadLetterQueue: {
+          queue: receiptQueueDLQ.cdk.queue,
+          maxReceiveCount: 1
+        }
+      }
     },
   })
 
@@ -50,12 +66,12 @@ export function ExampleStack({ stack }: StackContext) {
         targets: {
           shipping: "packages/functions/src/shipping.handler",
           receipt: {
-            type:"queue",
-            queue:receiptQueue
+            type: "queue",
+            queue: receiptQueue
+          },
         },
       },
-    },
-  }
+    }
   });
 
   warehouseQueue.bind([bus]);

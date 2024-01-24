@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "sst dev --no-warnings",
+    "dev": "sst dev",
     "build": "sst build",
     "deploy": "sst deploy",
     "remove": "sst remove",
@@ -12,6 +12,7 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
+    "@aws-cdk/core": "^1.204.0",
     "@tsconfig/node18": "^18.2.2",
     "aws-cdk-lib": "2.110.1",
     "constructs": "10.3.0",

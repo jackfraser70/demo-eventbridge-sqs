@@ -1,6 +1,7 @@
 import { Api, EventBus, StackContext, Queue } from "sst/constructs";
 export function ExampleStack({ stack }: StackContext) {
 
+  // create a queue for the warehouse (with a batch size of 5)
   const warehouseQueue = new Queue(stack, 'QueueWarehouse', {
     consumer: {
       function: {
@@ -15,17 +16,17 @@ export function ExampleStack({ stack }: StackContext) {
     },
   });
 
-
+  // Create a DLQ for the receipt queue
   const receiptQueueDLQ = new Queue(stack, 'QueueReceiptDLQ', {
     consumer: {
       function: {
         handler:
           "packages/functions/src/receipt-dlq.handler",
-
       }
     },
   })
 
+  // create a queue for the receipt
   const receiptQueue = new Queue(stack, 'QueueReceipt', {
     consumer: {
       function: {
@@ -33,6 +34,7 @@ export function ExampleStack({ stack }: StackContext) {
           "packages/functions/src/receipt.handler",
       },
     },
+    // add a DLQ to the queue
     cdk: {
       queue: {
         deadLetterQueue: {
@@ -43,7 +45,7 @@ export function ExampleStack({ stack }: StackContext) {
     },
   })
 
-
+  // create an event bus with rules
   const bus = new EventBus(stack, "Ordered", {
     rules: {
       orderPlaced: {
@@ -74,8 +76,10 @@ export function ExampleStack({ stack }: StackContext) {
     }
   });
 
+  // bind the queue to the event bus
   warehouseQueue.bind([bus]);
 
+  // create an API to place orders
   const api = new Api(stack, "Api", {
     defaults: {
       function: {

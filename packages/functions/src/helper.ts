@@ -11,4 +11,5 @@ export function sleep() {
     yellow: "\x1b[33m",
     magenta: "\x1b[35m",
     cyan: "\x1b[36m",
+    brightYellow: "\x1b[93m"
   };

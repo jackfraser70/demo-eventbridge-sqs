@@ -31,7 +31,7 @@ export async function handler(event) {
       name: `My order ${id}`,
       items: [
         {
-          id: "1",
+          id: id,
           name: "My item",
           price: 10,
         },

@@ -1,52 +1,24 @@
-# How to use EventBus in your serverless app
+# EventBridge and SQS Integration with SST
 
-An example serverless app created with SST.
+This demo project demonstrates using AWS EventBridge with SQS, incorporating SST's features for IoC.
 
-## Getting Started
+To set up the example:
+### `npm install`
 
-[**Read the tutorial**](https://sst.dev/examples/how-to-use-eventbus-in-your-serverless-app.html)
+## Operational Commands
 
-Install the example.
+### `npm run start`
 
-```bash
-$ npx create-sst@latest --template=examples/eventbus
-# Or with Yarn
-$ yarn create sst --template=examples/eventbus
-# Or with PNPM
-$ pnpm create sst --template=examples/eventbus
-```
+Initiates the local Lambda development environment.
 
-## Commands
+## Demonstration
 
-### `yarn run start`
+Open a new terminal window. Use the SST output URL, appending `/order` to it. 
+Invoke the API with a POST request:
+Simulate multiple orders by adding ?qty=10 (modifiable up to 1000).
 
-Starts the local Lambda development environment.
+Use this curl command:
 
-### `yarn run build`
-
-Build your app and synthesize your stacks.
-
-Generates a `.build/` directory with the compiled files and a `.build/cdk.out/` directory with the synthesized CloudFormation stacks.
-
-### `yarn run deploy [stack]`
-
-Deploy all your stacks to AWS. Or optionally deploy, a specific stack.
-
-### `yarn run remove [stack]`
-
-Remove all your stacks and all of their resources from AWS. Or optionally removes, a specific stack.
-
-### `yarn run test`
-
-Runs your tests using Jest. Takes all the [Jest CLI options](https://jestjs.io/docs/en/cli).
-
-## Documentation
-
-Learn more about SST.
-
-- [Docs](https://docs.sst.dev)
-- [sst](https://docs.sst.dev/packages/sst)
-
-## Community
-
-[Follow us on Twitter](https://twitter.com/sst_dev) or [post on our forums](https://discourse.sst.dev).
+`curl --request POST \
+  --url 'https://[deployed-id].execute-api.us-east-1.amazonaws.com/order?[qty=10]'
+`

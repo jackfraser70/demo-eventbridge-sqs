@@ -1,4 +1,4 @@
-import { color, sleep } from "./receipt";
+import { color, sleep } from "./helper";
 
 export async function handler(event) {
   const body_detail =event.detail;

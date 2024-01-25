@@ -1,24 +1,24 @@
 import { PutEventsCommand, EventBridgeClient } from "@aws-sdk/client-eventbridge";
 import { EventBus } from "sst/node/event-bus";
-import { color } from "./receipt";
+import { color } from "./helper";
 
 const client = new EventBridgeClient({});
 
-function getOrders(event){
+function getOrders(event) {
   const orderId = [];
   let qty = 1;
   if (event.queryStringParameters && event.queryStringParameters.qty) {
     qty = parseInt(event.queryStringParameters.qty)
   }
-    if(qty>1000){
-      return {
-        statusCode: 400,
-        body: JSON.stringify({ status: `max qty is 1000`}),
-      };
-    }
-    for (let i = 0; i < qty; i++) {
-      orderId.push(i+1);
-    }
+  if (qty > 1000) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({ status: `max qty is 1000` }),
+    };
+  }
+  for (let i = 0; i < qty; i++) {
+    orderId.push(i + 1);
+  }
 
   return orderId;
 }
@@ -62,6 +62,6 @@ export async function handler(event) {
 
   return {
     statusCode: 200,
-    body: JSON.stringify({ status: `successful received ${orderId.length} orders`}),
+    body: JSON.stringify({ status: `successful received ${orderId.length} orders` }),
   };
 }

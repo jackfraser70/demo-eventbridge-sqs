@@ -76,7 +76,6 @@ export function ExampleStack({ stack }: StackContext) {
 
   warehouseQueue.bind([bus]);
 
-  // Create a HTTP API
   const api = new Api(stack, "Api", {
     defaults: {
       function: {
@@ -88,7 +87,6 @@ export function ExampleStack({ stack }: StackContext) {
     },
   });
 
-  // Show the endpoint in the output
   stack.addOutputs({
     ApiEndpoint: api.url,
   });

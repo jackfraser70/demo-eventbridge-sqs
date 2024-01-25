@@ -1,6 +1,6 @@
 import { PutEventsCommand, EventBridgeClient } from "@aws-sdk/client-eventbridge";
 import { EventBus } from "sst/node/event-bus";
-import { sleep } from "./receipt";
+import { sleep } from "./helper";
 
 const client = new EventBridgeClient({});
 

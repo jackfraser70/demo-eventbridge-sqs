@@ -51,7 +51,7 @@ export async function handler(event) {
 
     return client.send(putEventsCommand)
       .then(() => {
-        console.log(color.magenta, `Order id: ${id} placed!`);
+        console.log(color.magenta, `[Order] id: ${id} placed!`);
       })
       .catch((e) => {
         console.log(e);

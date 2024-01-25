@@ -8,7 +8,7 @@ export async function handler(event: any) {
   const body_detail = JSON.parse(event.Records[0].body).detail;
   body_detail.inWarehouse = true;
 
-  console.log(color.brightYellow, `Warehouse processing order ${body_detail.id}...`);
+  console.log(color.brightYellow, `[Warehouse] processing order ${body_detail.id}...`);
   await sleep();
 
   const putEventsCommand = new PutEventsCommand({
@@ -24,7 +24,7 @@ export async function handler(event: any) {
 
   try {
     await client.send(putEventsCommand);
-    console.log(color.brightYellow, `Warehouse confirmed order ${body_detail.id}...`);
+    console.log(color.brightYellow, `[Warehouse] confirmed order ${body_detail.id}`);
   } catch (e) {
     console.error(e);
   }
